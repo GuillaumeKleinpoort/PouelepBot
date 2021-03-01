@@ -1,5 +1,5 @@
 import discord
-import os
+import time
 
 from keep_alive import keep_alive
 
@@ -18,5 +18,15 @@ async def on_message(message):
     if str.lower(message.content) == 'pouelep':
       await message.channel.send('POUELEP')
 
+
+    voice_state = message.author.voice
+
+    if voice_state is not None:
+        channel = message.author.voice.channel
+        vc = await channel.connect()
+        vc.play(discord.FFmpegPCMAudio("pouelep.mp3"))
+        time.sleep(1.5)
+        await vc.disconnect()
+
 keep_alive()
-client.run("ODE2MDQ5OTkxNTg3NTk0MjQx.YD1Txw.hylWBAc1mlF40fa755ZNcnx1vUc")
+client.run("")
