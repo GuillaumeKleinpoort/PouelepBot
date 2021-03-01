@@ -1,4 +1,5 @@
 import discord
+import os
 import time
 
 from keep_alive import keep_alive
@@ -30,4 +31,4 @@ async def on_message(message):
     except discord.errors.ClientException:
       pass
 keep_alive()
-client.run("")
+client.run(os.getenv('TOKEN'))
