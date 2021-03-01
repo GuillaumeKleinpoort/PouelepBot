@@ -19,14 +19,15 @@ async def on_message(message):
       await message.channel.send('POUELEP')
 
 
-    voice_state = message.author.voice
-
-    if voice_state is not None:
-        channel = message.author.voice.channel
-        vc = await channel.connect()
-        vc.play(discord.FFmpegPCMAudio("pouelep.mp3"))
-        time.sleep(1.5)
-        await vc.disconnect()
-
+    try:
+      voice_state = message.author.voice
+      if voice_state is not None :
+          channel = message.author.voice.channel
+          vc = await channel.connect()
+          vc.play(discord.FFmpegPCMAudio("pouelep.mp3"))
+          time.sleep(1.5)
+          await vc.disconnect()
+    except discord.errors.ClientException:
+      pass
 keep_alive()
 client.run("")
