@@ -14,6 +14,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+  try:
     if message.author == client.user:
         return
     if 'pouelep' in str.lower(message.content):
@@ -29,5 +30,7 @@ async def on_message(message):
             await vc.disconnect()
       except discord.errors.ClientException:
         pass
+  except Exception:
+    pass
 keep_alive()
 client.run(os.getenv('TOKEN'))
