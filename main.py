@@ -15,7 +15,7 @@ async def on_ready():
     print('Pouelep ? {}'.format(client))
     
 @client.command(pass_context=True)
-async def pouelep(ctx, channel_name):
+async def pouelep(ctx, *, channel_name):
   # channels = (c.name for c in ctx.server.channels if c.type==ChannelType.voice)
   for chann in ctx.guild.voice_channels:
     if str(chann) == channel_name:
