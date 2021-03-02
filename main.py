@@ -3,17 +3,35 @@ import os
 import time
 
 from keep_alive import keep_alive
+from discord.ext import commands
+from discord import ChannelType
 
 
-client = discord.Client()
+client = commands.Bot(command_prefix="$")
+
 
 @client.event
 async def on_ready():
     print('Pouelep ? {}'.format(client))
     
+@client.command(pass_context=True)
+async def pouelep(ctx, channel_name):
+  # channels = (c.name for c in ctx.server.channels if c.type==ChannelType.voice)
+  for chann in ctx.guild.voice_channels:
+    if str(chann) == channel_name:
+      try:
+        vc = await chann.connect()
+        vc.play(discord.FFmpegPCMAudio("pouelep.mp3"))
+        time.sleep(1.5)
+        await vc.disconnect()
+      except discord.errors.ClientException:
+        pass
+      
+      return
+  
 
-@client.event
-async def on_message(message):
+@client.listen('on_message')
+async def poueleping(message):
   try:
     if message.author == client.user:
         return
@@ -32,5 +50,6 @@ async def on_message(message):
         pass
   except Exception:
     pass
+
 keep_alive()
 client.run(os.getenv('TOKEN'))
